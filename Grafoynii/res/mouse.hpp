@@ -11,8 +11,12 @@ void getMouseEvent(int fd)
 	{
 		MouseEvent.flags = tmp[0];
 		MouseEvent.dx = tmp[1];
-		MouseEvent.dy = tmp[2];
+		MouseEvent.dy = tmp[2]; // to prevent invertation
 	}
 	else
-		printf("!\n");
+	{
+		MouseEvent.flags = 0;
+		MouseEvent.dx = 0;
+		MouseEvent.dy = 0;
+	}
 }

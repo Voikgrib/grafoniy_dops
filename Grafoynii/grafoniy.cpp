@@ -5,6 +5,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <math.h>
+#include <stdlib.h>
 
 // defines here
 
@@ -29,13 +31,21 @@ struct event
 
 // my libs here
 
+#include "res/Vector2.hpp"
+#include "res/realToPixel.hpp"
 #include "res/screen.hpp"
 #include "res/mouse.hpp"
+#include "res/lines.hpp"
 
 int main()
 {
 	int screen_fd = open(SCREEN_FILE, O_WRONLY);
 	int mouse_fd = open(MOUSE_FILE, O_RDONLY | O_NONBLOCK );
+
+	Vector2 <float> x1(0, 0);
+	Vector2 <float> x2(-0.5, -0.7);
+	Vector2 <float> dx(0, 0);
+
 
 	int i = 0;
 	int j = 0;
@@ -43,18 +53,24 @@ int main()
 	int len = 20;
 	int high = 20;
 
-	int x = 850;
-	int y = 300;	
+	dx.x = -0.5;
+	dx.y = -0.7;	
 
 	while(2+2 == 4)
 	{
 		getMouseEvent(mouse_fd);
-		x = x + ((int) (MouseEvent.dx));
-		y = y + ((int) (MouseEvent.dy));
-		//y++;
+		dx.x += (((float) MouseEvent.dx ) / 255);
+		dx.y += (((float) MouseEvent.dy ) / 255);	
+		x2 = dx;		
 
-		i = 0;
-		while(i < SCREEN_HIGH)
+		//xInt.x = xInt.x + ((int) (MouseEvent.dx));
+		//xInt.y = xInt.y + ((int) (MouseEvent.dy));
+		
+		//x2.x = -1 + ((2 * xInt.x + 1) / SCREEN_LENGH);
+		//x2.y = -1 + ((2 * xInt.y + 1) / SCREEN_HIGH);
+
+		//i = 0;
+		/*while(i < SCREEN_HIGH)
 		{
 			j = 0;
 
@@ -62,22 +78,22 @@ int main()
 			{
 				if((j > x && j < (x + len)) && (i > y && i < (y + high)))
 				{
-					setPixel(i, j, 0, 0, 255, 0);
+					setPixel(i, j, 0, 255, 255, 0);
 				}
 				else
 				{
-					setPixel(i, j, 0, 255, 0, 0);
+					setPixel(i, j, 0, 0, 0, 0);
 				}
 
 				j++;
 			}
 
 			i++;
-		}
+		}*/
+	
+		drawLine(&x1, &x2);
 
-		//screen_fd = open(SCREEN_FILE, O_WRONLY);
 		updateScreen(screen_fd);
-		//close(screen_fd);
 	}
 
 	close(mouse_fd);
