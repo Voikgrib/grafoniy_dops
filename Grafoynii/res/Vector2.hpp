@@ -13,6 +13,7 @@ class Vector2
 	Vector2();
 	Vector2(typeOfData newX, typeOfData newY);
 	Vector2<typeOfData>& operator= (const Vector2<typeOfData>& fromVec);
+	void setCoords(typeOfData newX, typeOfData newY);
 };
 
 template <typename typeOfData> 
@@ -38,5 +39,13 @@ Vector2<typeOfData>& Vector2<typeOfData>::operator= (const Vector2<typeOfData>& 
 	
 	return *this;
 }
+
+template <typename typeOfData> 
+void Vector2<typeOfData>::setCoords(typeOfData newX, typeOfData newY)
+{
+	x = newX;
+	y = newY;
+}
+
 
 

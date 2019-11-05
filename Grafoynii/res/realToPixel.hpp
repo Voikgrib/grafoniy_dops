@@ -21,8 +21,8 @@ Vector2 <float> pixelToReal(Vector2 <int> *vec) // NT
 {
 	Vector2 <float> ret;
 
-	ret.x = -1 + ((2 * vec->x + 1) / SCREEN_LENGH);
-	ret.y = -1 + ((2 * vec->y + 1) / SCREEN_HIGH);
+	ret.x = -1 + (((float) (2 * vec->x) + 1) / SCREEN_LENGH);
+	ret.y = -1 + ((2 * (float) (SCREEN_HIGH - vec->y) + 1) / SCREEN_HIGH);
 
 	return ret;
 }
